@@ -1,5 +1,10 @@
-# Awesome-Parallel-Attention
-## Parallel Attention: History, Progression, Variants, & Applications
+# ⚡ Awesome Parallel Attention
+
+<div align="center">
+  <img src="assets/banner.svg" alt="Parallel Attention Banner" width="100%" />
+</div>
+
+## 🚀 Parallel Attention: History, Progression, Variants, & Applications
 
 Parallel Attention—alternatively designated as fused attention blocks, concurrent multi-head pathways, or non-sequential transformer routing—is an advanced hardware-aware structural optimization paradigm designed to accelerate the internal processing loops of deep neural networks. In traditional Transformer layer blocks (such as the standard Vanilla Transformer topology), token computations follow a strict **sequential serialization bottleneck**: input tensors must completely finish executing a Multi-Head Self-Attention pass, step through a linear layer projection, and undergo layer normalization before they are permitted to initiate the Feed-Forward Network (FFN) or Mixture-of-Experts (MoE) block. 
 
@@ -7,7 +12,7 @@ Parallel Attention completely dismantles this sequential dependency. By re-archi
 
 ---
 
-## 1. The Chronological Evolution
+## 📅 1. The Chronological Evolution
 
 The technical framework governing multi-head data-path coordination has transitioned from rigidly serialized layer blocks to concurrent single-pass calculations and hardware-fused low-rank memory compressions.
 
@@ -28,7 +33,7 @@ flowchart LR
 
 ---
 
-## 2. Core Functional & Architectural Variants
+## 🎛️ 2. Core Functional & Architectural Variants
 
 Parallel Attention setups are strictly categorized based on how the dimensional channels partition parameters and how the matrix fusion layers are compiled.
 
@@ -40,7 +45,7 @@ Parallel Attention setups are strictly categorized based on how the dimensional 
 
 ---
 
-## 3. Communication Primitives & Hardware Optimization Matrix
+## 🔌 3. Communication Primitives & Hardware Optimization Matrix
 
 To optimize parallel attention operations over large-scale distributed server configurations, engineering frameworks collapse sequential matrix loops into fused compilation blocks.
 
@@ -80,7 +85,7 @@ end
 
 ---
 
-## 4. Production Engineering Challenges & Mitigations
+## 🛠️ 4. Production Engineering Challenges & Mitigations
 
 Deploying and scaling parallel attention matrices across large-scale commercial architectures introduces critical initialization and optimization constraints.
 
@@ -91,7 +96,7 @@ Deploying and scaling parallel attention matrices across large-scale commercial 
 
 ---
 
-## 5. Frontier Real-World AI Infrastructure Applications
+## 💡 5. Frontier Real-World AI Infrastructure Applications
 
 | Infrastructure Application | Key Implementation Details | First Used | Paper Link |
 | :--- | :--- | :---: | :--- |
@@ -101,7 +106,7 @@ Deploying and scaling parallel attention matrices across large-scale commercial 
 
 ---
 
-## References
+## 📚 References
 1. Vaswani, A., et al. (2017). Attention is all you need. *Advances in Neural Information Processing Systems (NeurIPS)*, 30 [INDEX: 1].
 2. Wang, Q., et al. (2019). Learning deep transformer models for machine translation. *Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics*, 1810-1822.
 3. Shoeybi, M., et al. (2019). Megatron-LM: Training multi-billion parameter language models using model parallelism. *arXiv preprint arXiv:1909.08053*.
