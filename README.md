@@ -12,7 +12,11 @@ Parallel Attention completely dismantles this sequential dependency. By re-archi
 The technical framework governing multi-head data-path coordination has transitioned from rigidly serialized layer blocks to concurrent single-pass calculations and hardware-fused low-rank memory compressions.
 
 ```mermaid
-[Serialized Post-LN Blocks (Vaswani, 2017)] ───> [Pre-LN Serialized Paths (2020)] ───> [Parallel Attention Blocks (PaLM, 2022)] ───> [Fused Latent Parallelism (Modern LLMs)](Catastrophic Sequential HBM Stalls)              (Stable but Latent Token Loops)           (Concurrent Attention & FFN Matrix Fusion)        (Low-Rank Cache Matrix De-allocation)
+flowchart LR
+    A["Serialized Post-LN Blocks (Vaswani, 2017)<br/>(Catastrophic Sequential HBM Stalls)"]
+    --> B["Pre-LN Serialized Paths (2020)<br/>(Stable but Sequential Layer Execution)"]
+    --> C["Parallel Attention Blocks (PaLM, 2022)<br/>(Concurrent Attention & FFN Execution)"]
+    --> D["Fused Latent Parallelism (Modern LLMs)<br/>(Low-Rank Cache & Kernel Fusion)"]
 ```
 
 *   **The Serialized Post-LN Baseline Era (Vaswani et al., 2017)**
@@ -53,8 +57,34 @@ Parallel Attention setups are strictly categorized based on how the dimensional 
 To optimize parallel attention operations over large-scale distributed server configurations, engineering frameworks collapse sequential matrix loops into fused compilation blocks.
 
 ```mermaid
-Sequential Transformer Block[Input x] ──> [LayerNorm] ──> [Attention] ──> [HBM Write] ──> [LayerNorm] ──> [FFN Layer] ──> [Output]Parallel Transformer Block┌──> [LayerNorm] ──> [Fused Attention Matrix (Q,K,V)] ──┐[Input x] ────┼                                                       ├──> [Single HBM Write] ──> [Output]└──> [LayerNorm] ──> [Fused FFN Up/Gate Matrix Columns] ┘
+flowchart TB
+
+subgraph S["Sequential Transformer Block"]
+    S1["Input x"]
+    --> S2["LayerNorm"]
+    --> S3["Attention"]
+    --> S4["HBM Write"]
+    --> S5["LayerNorm"]
+    --> S6["FFN Layer"]
+    --> S7["Output"]
+end
+
+subgraph P["Parallel Transformer Block"]
+    P1["Input x"]
+
+    P1 --> A1["LayerNorm"]
+    A1 --> A2["Fused Attention Matrix (Q, K, V)"]
+
+    P1 --> F1["LayerNorm"]
+    F1 --> F2["Fused FFN Up/Gate Matrix"]
+
+    A2 --> M["Single HBM Write"]
+    F2 --> M
+
+    M --> P2["Output"]
+end
 ```
+
 *   **Fused Input Projection Kernels**
     *   *Profile:* Collapses model memory lookups. Instead of launching four separate kernel execution blocks for Query ($W_q$), Key ($W_k$), Value ($W_v$), and FFN Gate ($W_{\text{gate}}$), the compiler stacks the matrices on disk as a single unified weight tensor, executing the projection in a single continuous hardware clock cycle.
 *   **Asynchronous Megatron-LM Parallel Sharding**
