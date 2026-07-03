@@ -4,11 +4,15 @@
   <img src="assets/banner.svg" alt="Parallel Attention Banner" width="100%" />
 </div>
 
+<div align="center">
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a><a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
+</div>
+
 ## 🚀 Parallel Attention: History, Progression, Variants, & Applications
 
-Parallel Attention—alternatively designated as fused attention blocks, concurrent multi-head pathways, or non-sequential transformer routing—is an advanced hardware-aware structural optimization paradigm designed to accelerate the internal processing loops of deep neural networks. In traditional Transformer layer blocks (such as the standard Vanilla Transformer topology), token computations follow a strict **sequential serialization bottleneck**: input tensors must completely finish executing a Multi-Head Self-Attention pass, step through a linear layer projection, and undergo layer normalization before they are permitted to initiate the Feed-Forward Network (FFN) or Mixture-of-Experts (MoE) block. 
+**Parallel Attention**—also referred to as **fused attention blocks**, **concurrent multi-head attention**, or **non-sequential transformer routing**—is a state-of-the-art structural optimization paradigm for deep neural networks. In traditional Transformer topologies (such as the standard Vanilla Transformer), token computations face a severe **sequential serialization bottleneck**: input tensors must completely finish executing a Multi-Head Self-Attention pass, go through a linear projection layer, and undergo layer normalization before executing the Feed-Forward Network (FFN) or Mixture-of-Experts (MoE) block.
 
-Parallel Attention completely dismantles this sequential dependency. By re-architecting the transformer cell block to compute self-attention and FFN/MoE projections **simultaneously in parallel** across identical input hidden states, the framework allows compiler engines to fuse deep mathematical operations into a single, massive matrix multiplication step. This reduces kernel execution stalls, drops High Bandwidth Memory (HBM) read/write frequencies precisely in half, and increases inference token-per-second generation speeds out-of-the-box without destroying model capacity or factual accuracy.
+This repository serves as a curated list of research papers, optimization frameworks, and hardware acceleration techniques for **Parallel Attention architectures**. By computing self-attention and FFN/MoE projections **simultaneously in parallel** across identical input hidden states, modern compilers can fuse mathematical operations into a single massive matrix multiplication step. This minimizes High Bandwidth Memory (HBM) read/write overhead, eliminates GPU kernel execution stalls, and increases inference token throughput out-of-the-box.
 
 ---
 
